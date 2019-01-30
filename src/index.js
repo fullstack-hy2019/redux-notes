@@ -1,12 +1,47 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
+import ReactDOM from 'react-dom'
+import { createStore } from 'redux'
+import noteReducer from './reducers/noteReducer'
 
-ReactDOM.render(<App />, document.getElementById('root'));
+const store = createStore(noteReducer)
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: http://bit.ly/CRA-PWA
-serviceWorker.unregister();
+store.dispatch({
+  type: 'NEW_NOTE',
+  data: {
+    content: 'sovelluksen tila talletetaan storeen',
+    important: true,
+    id: 1
+  }
+})
+
+store.dispatch({
+  type: 'NEW_NOTE',
+  data: {
+    content: 'tilanmuutokset tehdään actioneilla',
+    important: false,
+    id: 2
+  }
+})
+
+class App extends React.Component {
+  render() {
+    return(
+      <div>
+        <ul>
+          {store.getState().map(note=>
+            <li key={note.id}>
+              {note.content} <strong>{note.important ? 'tärkeä' : ''}</strong>
+            </li>
+          )}
+         </ul>
+      </div>
+    )
+  }
+}
+
+const renderApp = () => {
+  ReactDOM.render(<App />, document.getElementById('root'))
+}
+
+renderApp()
+store.subscribe(renderApp)
