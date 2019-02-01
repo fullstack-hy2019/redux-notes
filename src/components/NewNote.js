@@ -1,15 +1,17 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import { createNote } from '../reducers/noteReducer'
 
 const NewNote = (props) => {
+  console.log(createNote)
+  console.log(props.createNote)
 
   const addNote = (event) => {
     event.preventDefault()
-    props.store.dispatch(
-      createNote(event.target.note.value)
-    )
+    props.createNote(event.target.note.value)
     event.target.note.value = ''
   }
+
   return (
     <form onSubmit={addNote}>
       <input name="note" />
@@ -18,4 +20,7 @@ const NewNote = (props) => {
   )
 }
 
-export default NewNote
+export default connect(
+  null,
+  { createNote }
+)(NewNote)
