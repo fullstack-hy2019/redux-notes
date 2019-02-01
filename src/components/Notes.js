@@ -5,7 +5,6 @@ import { toggleImportanceOf } from '../reducers/noteReducer'
 const Notes = ({ store }) => {
   const { notes, filter } = store.getState()
   const notesToShow = () => {
-    console.log('filter',filter)
     if ( filter === 'ALL' ) {
       return notes
     }
