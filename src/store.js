@@ -1,5 +1,6 @@
 import { createStore, combineReducers, applyMiddleware } from 'redux'
-import thunk from 'redux-thunk';
+import thunk from 'redux-thunk'
+import { composeWithDevTools } from 'redux-devtools-extension'
 
 import noteReducer from './reducers/noteReducer'
 import filterReducer from './reducers/filterReducer'
@@ -10,7 +11,9 @@ const reducer = combineReducers({
 })
 
 const store = createStore(
-  reducer, applyMiddleware(thunk)
+  reducer,
+  composeWithDevTools(
+    applyMiddleware(thunk)
+  )
 )
-
 export default store
